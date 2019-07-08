@@ -31,7 +31,7 @@ def bandwidth_monitor(threshold, mode):
 
             print("Threshold Exceeded")
 
-            msg = f'''You have exceeded your {mode} usage. Current usage is {convert_mbit(usage[mode])} & threshold is set at {threshold}. To execute programmed function, reply "execute"'''
+            msg = f'''You have exceeded your {mode} usage. Current usage is {convert_mbit(usage[mode])} & threshold is set at {threshold}. To disable Wifi, reply 'disablewifi''''
 
             onewaysend.twilioSend(msg)
             res = responselistener.listen()
@@ -57,7 +57,10 @@ def wifiAction(cmd):
         onewaysend.twilioSend("Shut Down WiFi Successfully")
         return
     else:
-        onewaysend.twilioSend("Invalid Command entered. Try again.")
+        onewaysend.twilioSend("Invalid Command entered. Trying again in 5 seconds.")
+        time.sleep(5)
+        res = responselistener.listen()
+        wifiAction(res)
 
 
 if __name__ == '__main__':

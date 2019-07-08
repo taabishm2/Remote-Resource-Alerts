@@ -22,4 +22,6 @@ def monitorCpuTimes(mode,threshold):
             return
         time.sleep(1)
 
-def cpuAction()
+def cpuAction(cmd):
+    print("CPU ACTION")
+    return
