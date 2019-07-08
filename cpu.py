@@ -2,7 +2,7 @@ import psutil
 import time
 import responselistener
 
-def monitor_cpu_times(mode,threshold):
+def monitorCpuTimes(mode,threshold):
     '''Monitor the CPU time in seconds spent in different modes in seconds
 
     modes is an integer and may be 0 (user), 1 (system) or 2 (idle)
@@ -17,10 +17,9 @@ def monitor_cpu_times(mode,threshold):
         if val > threshold:
             msg = f"CPU Time exceeded in {['user','system','idle'][mode]}. Current CPU Time is: {val} seconds. Reply 'execute' to carry out programmed action"
             onewaysend.twilioSend(msg)
-            responselistener.listen()
+            res = responselistener.listen()
+            cpuAction(res)
             return
         time.sleep(1)
 
-
-
-print(monitor_cpu_times(1,2))
+def cpuAction()

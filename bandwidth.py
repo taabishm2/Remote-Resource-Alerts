@@ -34,7 +34,8 @@ def bandwidth_monitor(threshold, mode):
             msg = f'''You have exceeded your {mode} usage. Current usage is {convert_mbit(usage[mode])} & threshold is set at {threshold}. To execute programmed function, reply "execute"'''
 
             onewaysend.twilioSend(msg)
-            responselistener.listen()
+            res = responselistener.listen()
+            wifiAction(res)
             return
 
         time.sleep(1)
@@ -50,5 +51,15 @@ def meter(value):
     usage['dwnld']  += value[1]
     usage['total']  += value[2]
 
-bandwidth_monitor(2,'dwnld')
+def wifiAction(cmd):
+    if cmd == 'disablewifi':
+        os.system("netsh wlan disconnect")
+        onewaysend.twilioSend("Shut Down WiFi Successfully")
+        return
+    else:
+        onewaysend.twilioSend("Invalid Command entered. Try again.")
+
+
+if __name__ == '__main__':
+    bandwidth_monitor(2,'dwnld') #Testing for 2 Mb download limit
 
